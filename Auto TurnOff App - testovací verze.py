@@ -149,7 +149,9 @@ class Main_window(QtWidgets.QMainWindow):
         
 
     def check_minimum_edit_time(self):
-
+        """
+        Funkce hlídá, jestli uživatel zadal minimální hodnotu do odpočítávajícího času.
+        """
         given_time = self.time_edit.time()
 
         if given_time >= QtCore.QTime(0, 15):
@@ -162,6 +164,9 @@ class Main_window(QtWidgets.QMainWindow):
 
 
     def change_windows(self):
+        """
+        Funkce mění okna v aplikaci.
+        """
         if self.Qtstack.currentIndex() == 0:
             self.Qtstack.setCurrentIndex(1)
         elif self.Qtstack.currentIndex() == 1:
@@ -169,15 +174,19 @@ class Main_window(QtWidgets.QMainWindow):
 
 
     def change_monitor(self):
+        """
+        Funkce mění výstup z pc do monitoru.
+        """
         if self.checkbox1.isChecked():
             print("přepínám na 1. monitor")
         elif self.checkbox2.isChecked():
             print("přepínám na 2. monitor")
 
-
-
-    # funkce hlídá, aby bylo vždy odškrtnuté pouze jenom jedno pole
+    
     def checkbox_1_clicked(self):
+        """
+        Funkce hlídá, aby bylo vždy odškrtnuté pouze jenom jedno pole.
+        """
         if self.checkbox1.isChecked():
             self.checkbox1.setChecked(True)
             self.checkbox2.setChecked(False)
@@ -185,17 +194,21 @@ class Main_window(QtWidgets.QMainWindow):
             self.checkbox1.setChecked(False)
 
 
-    # funkce hlídá, aby bylo vždy odškrtnuté pouze jenom jedno pole
     def checkbox_2_clicked(self):
+        """
+        Funkce hlídá, aby bylo vždy odškrtnuté pouze jenom jedno pole.
+        """
         if self.checkbox2.isChecked():
             self.checkbox2.setChecked(True)
             self.checkbox1.setChecked(False)
         else:
             self.checkbox2.setChecked(False)
+    
 
-    # funkce spouští odpočet při kliknutí na tlačítko ENTER
     def start_countdown(self):
-
+        """
+        Funkce spouští odpočet při kliknutí na tlačítko ENTER.
+        """
         # z času vytvoří řetězec
         string_time = self.saved_time.time().toString()
 
@@ -205,20 +218,31 @@ class Main_window(QtWidgets.QMainWindow):
 
         self.timer_start()
 
-
     def stop_countdown(self):
+        """
+        Funkce zruší odpočítávání času.
+        """
+
         self.my_qtimer.stop()
 
-    # nastavení odpočtu
-    def timer_start(self):       
+
+    def timer_start(self):
+        """
+        Funkce nastavuje odpočet.
+        """
+
         self.time_left_int = self.seconds
 
         self.my_qtimer = QtCore.QTimer(self)
         self.my_qtimer.timeout.connect(self.timer_timeout)
         self.my_qtimer.start(1000)
 
-    # nastavení konce odpočtu
+ 
     def timer_timeout(self):
+        """
+        funkce nastavuje konec odpočtu
+        """
+
         if self.time_left_int > 0:
 
             self.time_left_int -= 1
@@ -227,9 +251,12 @@ class Main_window(QtWidgets.QMainWindow):
             self.my_qtimer.stop()
             print("Konec odpočítávání - Vypínám PC !!")
             
-    # každou vteřinu obnoví číslo, aby uživatel viděl odpočítávání
+   
     def update_number(self):
-        
+        """
+        funkce každou vteřinu obnoví číslo, aby uživatel viděl odpočítávání
+        """
+
         self.countdown.setText(str(datetime.timedelta(seconds=self.time_left_int)))
 
 
@@ -262,5 +289,3 @@ root.build()
 
 # prepnuti monitoru --> DisplaySwitch.exe /internal
 #                       DisplaySwitch.exe /external
-  
-
