@@ -6,42 +6,41 @@ from PyQt5 import QtWidgets, QtGui, QtCore
 
 
 
-class Main_window(QtWidgets.QMainWindow):
+class MainForm(QtWidgets.QMainWindow):
 
-
-    # atribut k uložení proměnné z time-edit widgetu, který se předává do druhého okna
+    # atribute to save variable from time-edit widget, which is passed to the second window.
     saved_time = None
 
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        # nastavení velikosti a nadpisu
+        # settings of size and title
         self.setWindowTitle("TurnOff Aplikace")
         self.setGeometry(500, 300, 404, 280)
         self.setFixedSize(404, 280)
 
-        # vytvoření stacked widgetu
+        # create stacked widget
         self.Qtstack = QtWidgets.QStackedWidget()
         self.setCentralWidget(self.Qtstack)
 
-        # vytvoření dvou widgetů do stacked-widget
+        # create two widget to stacked-widget
         self.stack1 = QtWidgets.QWidget()
         self.stack2 = QtWidgets.QWidget()
 
-        # přidání widgetů do stacked-widget
+        # add widget to stacked widget
         self.Qtstack.addWidget(self.stack1)
         self.Qtstack.addWidget(self.stack2)
 
-        # nastavení layoutu pro 1. stack
+        # setting of layout to first stack
         self.layout_stack1 = QtWidgets.QVBoxLayout()
         self.stack1.setLayout(self.layout_stack1)
 
-        # nastavení layoutu pro 2. stack
+        # setting of layout to second stack
         self.layout_stack2 = QtWidgets.QVBoxLayout()
         self.stack2.setLayout(self.layout_stack2)
 
-        # spuštění obou oken
+        # launch both windows
         self.show()
         self.front_window()
         self.back_window()
@@ -49,41 +48,41 @@ class Main_window(QtWidgets.QMainWindow):
 
     def front_window(self):  
              
-        # layout s textem
+        # layout with text
         self.text = QtWidgets.QWidget()
         self.layout_text = QtWidgets.QHBoxLayout()
         self.text.setLayout(self.layout_text)
         self.layout_stack1.addWidget(self.text)
         self.layout_stack1.addStretch()
 
-        # Layout pro edit a checkboxy
+        # Layout to edit a checkboxs
         layout_edit = QtWidgets.QHBoxLayout()
         self.layout_stack1.addLayout(layout_edit)
         self.layout_stack1.addStretch()
 
-        # Layout pro error hlášku
+        # Layout to error issue
         layout_error = QtWidgets.QHBoxLayout()
         self.layout_stack1.addLayout(layout_error)
 
-        # Layout pro pushbutton
+        # Layout to pushbutton
         layout_button = QtWidgets.QHBoxLayout()
         self.layout_stack1.addLayout(layout_button)
 
-        # widget s textem
-        self.text = QtWidgets.QLabel("Zde nastav, za jak dlouhou dobu chceš automaticky vypnout pc. \nMůžeš i uvést, na který monitor chceš hned přepnout.\nMinimální doba je 15 minut. \n\nPoznámka:\nPřed vypnutím se pc automaticky přepne na první monitor.")
+        # widget with text
+        self.text = QtWidgets.QLabel("Here you set how long it takes you to turn off the PC\nautomatically. You can also specify which monitor you want\nto switch to immediately. The minimum time is 15 minutes. \n\nNote: \nBefore turning off, the PC will automatically switch to the\nfirst monitor.")
         self.text.setFont(QtGui.QFont('Arial', 10))    
         self.layout_text.addWidget(self.text)
 
-        # Widget s time editem
+        # Widget with time-edite
         layout_edit.addStretch()
         self.time_edit = QtWidgets.QTimeEdit(self)
         self.time_edit.setFont(QtGui.QFont('Arial', 16))
         layout_edit.addWidget(self.time_edit)
 
-        # ulozeni času z edit time do třídní proměnné
+        # save time from edit-time to class variables
         self.saved_time = self.time_edit    
 
-        # Widget s políčkami
+        # Widget s checkboxes
         layout_edit.addStretch()
         self.checkbox1 = QtWidgets.QCheckBox("1. monitor", self)
         self.checkbox1.setFont(QtGui.QFont('Arial', 10))
@@ -94,63 +93,62 @@ class Main_window(QtWidgets.QMainWindow):
         layout_edit.addWidget(self.checkbox2)
         layout_edit.addStretch()
 
-        #widget s error hlaškou
+        #widget s error issue
         self.error = QtWidgets.QLabel(self)
-        self.error.setText("<font color='red'>minimální doba je 15 minut</font>")
+        self.error.setText("<font color='red'>minimum time is 15 minutes</font>")
         self.error.setFont(QtGui.QFont('Arial', 14))
         layout_error.addWidget(self.error)
         self.error.hide()
 
-        # Widget s push buttonem
+        # Widget with pushbutton
         self.Push_button_FW = QtWidgets.QPushButton("Enter", self)
         layout_button.addWidget(self.Push_button_FW)
 
-        # logic push button
+        # logic with pushbutton
         self.Push_button_FW.clicked.connect(self.check_minimum_edit_time)
 
-        # logic checkboxs
+        # logic with checkboxs
         self.checkbox1.clicked.connect(self.checkbox_1_clicked)
         self.checkbox2.clicked.connect(self.checkbox_2_clicked)
 
         
-
     def back_window(self):
 
-        # layout s textem a odpočítávání času
+        # layout with text and countdown timer
         self.text_countdown = QtWidgets.QWidget()
         layout_text_countdown = QtWidgets.QHBoxLayout()
         self.text_countdown.setLayout(layout_text_countdown)
         self.layout_stack2.addWidget(self.text_countdown)
 
-        # Layout pro pushbutton
+        # Layout with pushbutton
         button_layout = QtWidgets.QHBoxLayout()
         self.layout_stack2.addLayout(button_layout)
 
-        # widget s textem
+        # widget with text
         layout_text_countdown.addStretch()
-        self.text = QtWidgets.QLabel("Automatické vypnutí pc za:")
+        self.text = QtWidgets.QLabel("Automatic turning off the PC !!")
         self.text.setFont(QtGui.QFont('Arial', 10))    
         layout_text_countdown.addWidget(self.text)
         layout_text_countdown.addStretch()
 
-        # widget s odpočítáváním času
+        # widget with countdown timer
         self.countdown = QtWidgets.QLabel(self)
         self.countdown.setFont(QtGui.QFont('Arial', 16))
         layout_text_countdown.addWidget(self.countdown)
         layout_text_countdown.addStretch()
 
-        # Widget s push buttonem
+        # Widget with pushbutton
         self.Push_button_BW = QtWidgets.QPushButton("Stop", self)
         button_layout.addWidget(self.Push_button_BW)
 
-        # logic push button 
+        # logic with pushbutton 
         self.Push_button_BW.clicked.connect(self.change_windows)
         self.Push_button_BW.clicked.connect(self.stop_countdown)
         
 
     def check_minimum_edit_time(self):
         """
-        Funkce hlídá, jestli uživatel zadal minimální hodnotu do odpočítávajícího času.
+        The function monitors whether the user has entered a minimum value in the countdown time.
         """
         given_time = self.time_edit.time()
 
@@ -165,7 +163,7 @@ class Main_window(QtWidgets.QMainWindow):
 
     def change_windows(self):
         """
-        Funkce mění okna v aplikaci.
+        The function changes windows in the application.
         """
         if self.Qtstack.currentIndex() == 0:
             self.Qtstack.setCurrentIndex(1)
@@ -175,17 +173,17 @@ class Main_window(QtWidgets.QMainWindow):
 
     def change_monitor(self):
         """
-        Funkce mění výstup z pc do monitoru.
+        The function changes the output from the PC to the monitor.
         """
         if self.checkbox1.isChecked():
-            print("přepínám na 1. monitor")
+            os.system("DisplaySwitch.exe / internal")
         elif self.checkbox2.isChecked():
-            print("přepínám na 2. monitor")
+            os.system("DisplaySwitch.exe / external")
 
     
     def checkbox_1_clicked(self):
         """
-        Funkce hlídá, aby bylo vždy odškrtnuté pouze jenom jedno pole.
+        The function ensures that only one checkbox is unchecked at a time.
         """
         if self.checkbox1.isChecked():
             self.checkbox1.setChecked(True)
@@ -196,7 +194,7 @@ class Main_window(QtWidgets.QMainWindow):
 
     def checkbox_2_clicked(self):
         """
-        Funkce hlídá, aby bylo vždy odškrtnuté pouze jenom jedno pole.
+        The function ensures that only one checkbox is unchecked at a time.
         """
         if self.checkbox2.isChecked():
             self.checkbox2.setChecked(True)
@@ -207,12 +205,13 @@ class Main_window(QtWidgets.QMainWindow):
 
     def start_countdown(self):
         """
-        Funkce spouští odpočet při kliknutí na tlačítko ENTER.
+        The function starts the countdown when the ENTER button is clicked.
         """
-        # z času vytvoří řetězec
+        # create string from time
         string_time = self.saved_time.time().toString()
 
-        # z řetězce vytáhne čas, ale jen v sekundách a uloží proměnnou, která se vkládá do funkce: timer_start()
+
+        # string pulls the time, but only in seconds, and stores a variable that is inserted into the function: timer_start ()
         x = time.strptime(string_time.split(',')[0],'%H:%M:%S')
         self.seconds = (datetime.timedelta(hours=x.tm_hour,minutes=x.tm_min,seconds=x.tm_sec).total_seconds())
 
@@ -220,7 +219,7 @@ class Main_window(QtWidgets.QMainWindow):
 
     def stop_countdown(self):
         """
-        Funkce zruší odpočítávání času.
+        The function cancels the time countdown.
         """
 
         self.my_qtimer.stop()
@@ -228,7 +227,7 @@ class Main_window(QtWidgets.QMainWindow):
 
     def timer_start(self):
         """
-        Funkce nastavuje odpočet.
+        The function sets the countdown.
         """
 
         self.time_left_int = self.seconds
@@ -240,7 +239,7 @@ class Main_window(QtWidgets.QMainWindow):
  
     def timer_timeout(self):
         """
-        funkce nastavuje konec odpočtu
+        The function sets the end of the countdown.
         """
 
         if self.time_left_int > 0:
@@ -249,12 +248,12 @@ class Main_window(QtWidgets.QMainWindow):
             self.update_number()
         else:
             self.my_qtimer.stop()
-            print("Konec odpočítávání - Vypínám PC !!")
+            os.system("shutdown / s / t 1")
             
-   
+
     def update_number(self):
         """
-        funkce každou vteřinu obnoví číslo, aby uživatel viděl odpočítávání
+        The function resets the number every second so that the user can see the countdown.
         """
 
         self.countdown.setText(str(datetime.timedelta(seconds=self.time_left_int)))
@@ -267,25 +266,10 @@ class App(QtWidgets.QApplication):
         super().__init__(sys.argv)
 
     def build(self):
-        self.main_window = Main_window()
-
+        self.main_window = MainForm()
         sys.exit(self.exec_())
 
 
 
 root = App()
 root.build()
-
-
-
-
-
-
-
-
-# kód pro netestovací verzi
-
-# vypnuti pc ---->   os.system("shutdown /s /t 1")
-
-# prepnuti monitoru --> DisplaySwitch.exe /internal
-#                       DisplaySwitch.exe /external
