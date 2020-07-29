@@ -32,11 +32,11 @@ class MainForm(QtWidgets.QMainWindow):
         self.Qtstack.addWidget(self.stack1)
         self.Qtstack.addWidget(self.stack2)
 
-        # setting of layout to first stack
+        # setting of layout for first stack
         self.layout_stack1 = QtWidgets.QVBoxLayout()
         self.stack1.setLayout(self.layout_stack1)
 
-        # setting of layout to second stack
+        # setting of layout for second stack
         self.layout_stack2 = QtWidgets.QVBoxLayout()
         self.stack2.setLayout(self.layout_stack2)
 
@@ -55,16 +55,16 @@ class MainForm(QtWidgets.QMainWindow):
         self.layout_stack1.addWidget(self.text)
         self.layout_stack1.addStretch()
 
-        # Layout to edit a checkboxs
+        # Layout for edit a checkboxs
         layout_edit = QtWidgets.QHBoxLayout()
         self.layout_stack1.addLayout(layout_edit)
         self.layout_stack1.addStretch()
 
-        # Layout to error issue
+        # Layout for error issue message
         layout_error = QtWidgets.QHBoxLayout()
         self.layout_stack1.addLayout(layout_error)
 
-        # Layout to pushbutton
+        # Layout for pushbutton
         layout_button = QtWidgets.QHBoxLayout()
         self.layout_stack1.addLayout(layout_button)
 
@@ -82,7 +82,7 @@ class MainForm(QtWidgets.QMainWindow):
         # save time from edit-time to class variables
         self.saved_time = self.time_edit    
 
-        # Widget s checkboxes
+        # Widget with checkboxes
         layout_edit.addStretch()
         self.checkbox1 = QtWidgets.QCheckBox("1. monitor", self)
         self.checkbox1.setFont(QtGui.QFont('Arial', 10))
@@ -93,7 +93,7 @@ class MainForm(QtWidgets.QMainWindow):
         layout_edit.addWidget(self.checkbox2)
         layout_edit.addStretch()
 
-        #widget s error issue
+        # widget with error issue message
         self.error = QtWidgets.QLabel(self)
         self.error.setText("<font color='red'>minimum time is 15 minutes</font>")
         self.error.setFont(QtGui.QFont('Arial', 14))
@@ -114,13 +114,13 @@ class MainForm(QtWidgets.QMainWindow):
         
     def back_window(self):
 
-        # layout with text and countdown timer
+        # layout for text and countdown timer
         self.text_countdown = QtWidgets.QWidget()
         layout_text_countdown = QtWidgets.QHBoxLayout()
         self.text_countdown.setLayout(layout_text_countdown)
         self.layout_stack2.addWidget(self.text_countdown)
 
-        # Layout with pushbutton
+        # Layout for pushbutton
         button_layout = QtWidgets.QHBoxLayout()
         self.layout_stack2.addLayout(button_layout)
 
